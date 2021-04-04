@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:yellow/yellow.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,14 +35,27 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+
+    Future<bool> _promptPermissionSetting() async {
+      if (Platform.isIOS &&
+          await Permission.storage.request().isGranted &&
+          await Permission.photos.request().isGranted ||
+          Platform.isAndroid && await Permission.storage.request().isGranted) {
+        return true;
+      }
+      return false;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
         child: MaterialButton(
-          onPressed: () {
-            YellowImagePicker.pickImages(context, title: "yellow picker");
+          onPressed: () async {
+            if (await _promptPermissionSetting()) {
+              YellowImagePicker.pickImages(context, title: "yellow picker");
+            }
           },
             color: Colors.grey[200],
           child: Text("Add Photo")
