@@ -1,6 +1,5 @@
 import 'package:photo_gallery/photo_gallery.dart' as pg;
 import 'models/album.dart';
-import 'models/medium.dart';
 
 class YellowPickerAdapter {
   static Future<List<Album>> getAlbums() async {

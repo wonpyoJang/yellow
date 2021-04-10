@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yellow/src/image_providers/thumbnail_provider.dart';
-import 'package:yellow/src/yellow_picker_adapter.dart';
 
-import 'models/album.dart';
-import 'models/medium.dart';
+import 'view/album.dart';
+import 'widget/image_panel.dart';
 
 class YellowImagePicker {
   static void pickImages(BuildContext context,
@@ -46,13 +44,21 @@ class YellowImagePicker {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      height: 44,
-                      width: 44,
-                      child: Icon(
-                        Icons.album,
-                        size: 30.0,
-                        color: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AlbumView()),
+                        );
+                      },
+                      child: Container(
+                        height: 44,
+                        width: 44,
+                        child: Icon(
+                          Icons.album,
+                          size: 30.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Container(
@@ -70,59 +76,5 @@ class YellowImagePicker {
             ),
           );
         });
-  }
-}
-
-class ImagePanel extends StatefulWidget {
-  @override
-  _ImagePanelState createState() => _ImagePanelState();
-}
-
-class _ImagePanelState extends State<ImagePanel> {
-  List<Album> _album;
-  List<Medium> _media;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    initAsync();
-  }
-
-  void initAsync() async {
-    _album = await YellowPickerAdapter.getAlbums();
-    _media = await _album[0].getMedia();
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_isLoading == true)
-      return CircularProgressIndicator();
-    else
-      return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: _media.length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-              color: Colors.black,
-              width: 1,
-            )),
-            child: Image(
-                width: 150,
-                height: 250,
-                fit: BoxFit.cover,
-                image: ThumbnailProvider(
-                    height: 10000,
-                    width: 10000,
-                    medium: _media[index],
-                    highQuality: true)),
-          );
-        },
-      );
   }
 }
