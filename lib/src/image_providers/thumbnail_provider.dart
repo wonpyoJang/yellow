@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
 import 'package:yellow/src/models/medium.dart';
 
-
 /// Fetches the given medium thumbnail from the gallery.
 class ThumbnailProvider extends ImageProvider<ThumbnailProvider> {
   const ThumbnailProvider({

@@ -26,4 +26,3 @@ class Medium {
   /// The date at which the photo or video was modified.
   get modifiedDate => _medium.modifiedDate;
 }
-

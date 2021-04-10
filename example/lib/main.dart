@@ -35,11 +35,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-
     Future<bool> _promptPermissionSetting() async {
       if (Platform.isIOS &&
-          await Permission.storage.request().isGranted &&
-          await Permission.photos.request().isGranted ||
+              await Permission.storage.request().isGranted &&
+              await Permission.photos.request().isGranted ||
           Platform.isAndroid && await Permission.storage.request().isGranted) {
         return true;
       }
@@ -47,20 +46,18 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: MaterialButton(
-          onPressed: () async {
-            if (await _promptPermissionSetting()) {
-              YellowImagePicker.pickImages(context, title: "yellow picker");
-            }
-          },
-            color: Colors.grey[200],
-          child: Text("Add Photo")
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      )
-    );
+        body: Center(
+          child: MaterialButton(
+              onPressed: () async {
+                if (await _promptPermissionSetting()) {
+                  YellowImagePicker.pickImages(context, title: "yellow picker");
+                }
+              },
+              color: Colors.grey[200],
+              child: Text("Add Photo")),
+        ));
   }
 }

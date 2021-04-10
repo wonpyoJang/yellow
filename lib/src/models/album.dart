@@ -6,16 +6,15 @@ class Album {
 
   Album(this.album);
 
-  Future<List<Medium>> getMedia () async {
+  Future<List<Medium>> getMedia() async {
     List<pg.Medium> media;
     pg.MediaPage mediaPage;
     try {
       mediaPage = await album.listMedia();
-    } catch(_) {
+    } catch (_) {
       print(_);
     }
     media = mediaPage.items;
     return List.generate(media.length, (index) => Medium(media[index]));
   }
 }
-
