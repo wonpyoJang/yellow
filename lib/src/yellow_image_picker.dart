@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'selected_album_info.dart';
 import 'view/album.dart';
 import 'widget/image_panel.dart';
 
@@ -37,7 +38,7 @@ class YellowImagePicker {
                               color: Colors.black))
                     ],
                   )),
-              body: ImagePanel(),
+              body: CurrentAlbum(currentAlbumInfo: CurrentAlbumInfo(), child: ImagePanel()),
               bottomNavigationBar: Container(
                 height: 44,
                 color: Colors.black,

@@ -25,9 +25,8 @@ class ViewerPage extends StatelessWidget {
         body: Container(
           alignment: Alignment.center,
           child: medium.mediumType == pg.MediumType.image
-              ? FadeInImage(
+              ? Image(
                   fit: BoxFit.cover,
-                  placeholder: MemoryImage(kTransparentImage),
                   image: pg.PhotoProvider(mediumId: medium.id),
                 )
               : VideoProvider(
