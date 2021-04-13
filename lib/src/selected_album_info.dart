@@ -15,7 +15,7 @@ class CurrentAlbum extends InheritedWidget {
   static CurrentAlbum of(BuildContext context) {
     final CurrentAlbum result =
         context.dependOnInheritedWidgetOfExactType<CurrentAlbum>();
-    assert(result != null, 'No FrogColor found in context');
+    assert(result != null, 'No CurrentAlbum found in context');
     return result;
   }
 
@@ -25,14 +25,17 @@ class CurrentAlbum extends InheritedWidget {
 }
 
 class CurrentAlbumInfo {
-  Album _album;
+  List<Album> _albums;
+  Album _selectedAlbum;
   List<Medium> _media;
 
-  Album get album => _album;
+  List<Album> get albums => _albums;
+  Album get selectedAlbum => _selectedAlbum;
   List<Medium> get media => _media;
 
-  set album(Album album) =>  _album = album;
+  set selectedAlbum(Album album) =>  _selectedAlbum = album;
   set media(List<Medium> media) => _media = media;
+  set albums(List<Album> albums) => _albums = albums;
 
   CurrentAlbumInfo();
 }

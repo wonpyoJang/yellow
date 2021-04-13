@@ -5,6 +5,9 @@ import 'view/album.dart';
 import 'widget/image_panel.dart';
 
 class YellowImagePicker {
+
+  static ValueNotifier<CurrentAlbumInfo> currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
+
   static void pickImages(BuildContext context,
       {@required String title, double height = 294}) async {
     showModalBottomSheet(
@@ -31,14 +34,13 @@ class YellowImagePicker {
                           height: 30,
                           decoration: BoxDecoration(
                             color: Colors.yellow,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(13.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(13.0)),
                           ),
-                          child: Icon(Icons.arrow_upward_outlined,
-                              color: Colors.black))
+                          child:
+                          Icon(Icons.arrow_upward_outlined, color: Colors.black))
                     ],
                   )),
-              body: CurrentAlbum(currentAlbumInfo: CurrentAlbumInfo(), child: ImagePanel()),
+              body: ImagePanel(),
               bottomNavigationBar: Container(
                 height: 44,
                 color: Colors.black,
@@ -47,8 +49,7 @@ class YellowImagePicker {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
+                        Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(builder: (context) => AlbumView()),
                         );
                       },

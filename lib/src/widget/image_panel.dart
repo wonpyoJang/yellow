@@ -3,6 +3,7 @@ import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
 import 'package:yellow/src/yellow_picker_adapter.dart';
 
+import '../../yellow.dart';
 import '../models/album.dart';
 import '../models/medium.dart';
 import '../selected_album_info.dart';
@@ -26,8 +27,9 @@ class _ImagePanelState extends State<ImagePanel> {
   void initAsync() async {
     _album = await YellowPickerAdapter.getAlbums();
     _media = await _album[0].getMedia();
-    CurrentAlbum.of(context).currentAlbumInfo.album = _album[0];
-    CurrentAlbum.of(context).currentAlbumInfo.media = _media;
+    YellowImagePicker.currentAlbumInfo.value.selectedAlbum = _album[0];
+    YellowImagePicker.currentAlbumInfo.value.media = _media;
+    YellowImagePicker.currentAlbumInfo.value.albums = _album;
     setState(() {
       _isLoading = false;
     });
