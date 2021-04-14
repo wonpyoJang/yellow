@@ -62,6 +62,7 @@ class _AlbumViewState extends State<AlbumView> {
                     _media = await _selectedAlbum.getMedia();
                     YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
                         _selectedAlbum;
+                    YellowImagePicker.currentAlbumInfo.value = CurrentAlbumInfo();
                     YellowImagePicker.currentAlbumInfo.value.media = _media;
                     setState(() {});
                   },

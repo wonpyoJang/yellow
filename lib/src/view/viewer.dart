@@ -39,7 +39,7 @@ class _ViewerPageState extends State<ViewerPage> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-              "$currentPage/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
+              "${currentPage+1}/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
         ),
         body: ValueListenableBuilder<CurrentAlbumInfo>(
             valueListenable: YellowImagePicker.currentAlbumInfo,
