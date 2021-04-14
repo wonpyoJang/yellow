@@ -10,6 +10,10 @@ class YellowImagePicker {
 
   static void pickImages(BuildContext context,
       {@required String title, double height = 294}) async {
+
+    // initialize current state
+    currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
+
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {

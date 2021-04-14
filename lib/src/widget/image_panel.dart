@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
+import 'package:yellow/src/widget/select_button.dart';
 import 'package:yellow/src/yellow_picker_adapter.dart';
 
 import '../../yellow.dart';
@@ -40,38 +41,56 @@ class _ImagePanelState extends State<ImagePanel> {
     if (_isLoading == true)
       return Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
-          ));
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+      ));
     else
       return ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _media.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ViewerPage(_media[index])),
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    )),
-                child: Image(
-                    width: 150,
-                    height: 250,
-                    fit: BoxFit.cover,
-                    image: ThumbnailProvider(
-                        height: 10000,
-                        width: 10000,
-                        medium: _media[index],
-                        highQuality: true)),
-              )
-          );
+          return buildMediaItem(context, index);
         },
       );
   }
+
+  Widget buildMediaItem(BuildContext context, int index) {
+    return ValueListenableBuilder<CurrentAlbumInfo>(
+        valueListenable: YellowImagePicker.currentAlbumInfo,
+        builder: (context, value, child) {
+          return Stack(
+            children: [buildImage(context, index), buildSelectButton(index)],
+          );
+        });
+  }
+
+  Widget buildImage(BuildContext context, int index) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ViewerPage(index)),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: Colors.black,
+            width: 1,
+          )),
+          child: Image(
+              width: 150,
+              height: 250,
+              fit: BoxFit.cover,
+              image: ThumbnailProvider(
+                  height: 10000,
+                  width: 10000,
+                  medium: _media[index],
+                  highQuality: true)),
+        ));
+  }
+
+  Widget buildSelectButton(int index) {
+    return SelectButton(medium: _media[index]);
+  }
 }
+
