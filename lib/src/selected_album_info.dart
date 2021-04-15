@@ -37,10 +37,33 @@ class CurrentAlbumInfo {
     YellowImagePicker.currentAlbumInfo.notifyListeners();
   }
 
+  void addSelectedMediaByIndex(int index) {
+    if(media[index].isSelected) return;
+
+    _selectedMedia.addLast(_media[index]);
+    _media[index].isSelected = true;
+
+    calculateOrder();
+
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    YellowImagePicker.currentAlbumInfo.notifyListeners();
+  }
+
   void removeSelectedMedia(Medium medium) {
     _selectedMedia.remove(medium);
     medium.isSelected = false;
     medium.order = 0;
+
+    calculateOrder();
+
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    YellowImagePicker.currentAlbumInfo.notifyListeners();
+  }
+
+  void removeSelectedMediaByIndex(int index) {
+    _selectedMedia.remove(_media[index]);
+    _media[index].isSelected = false;
+    _media[index].order = 0;
 
     calculateOrder();
 

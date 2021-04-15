@@ -18,6 +18,10 @@ class _AlbumViewState extends State<AlbumView> {
   List<Medium> _media;
   Album _selectedAlbum;
   bool _isLoading = true;
+  GlobalKey gridKey = new GlobalKey();
+  int multiSelectStartIndex = 0;
+  int multiSelectCurrentIndex = 0;
+  int multiSelectCurrentMaxIndex = 0;
 
   @override
   void initState() {
@@ -62,7 +66,8 @@ class _AlbumViewState extends State<AlbumView> {
                     _media = await _selectedAlbum.getMedia();
                     YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
                         _selectedAlbum;
-                    YellowImagePicker.currentAlbumInfo.value = CurrentAlbumInfo();
+                    YellowImagePicker.currentAlbumInfo.value =
+                        CurrentAlbumInfo();
                     YellowImagePicker.currentAlbumInfo.value.media = _media;
                     setState(() {});
                   },
@@ -80,6 +85,7 @@ class _AlbumViewState extends State<AlbumView> {
             builder:
                 (BuildContext context, CurrentAlbumInfo data, Widget child) {
               return GridView.builder(
+                key: gridKey,
                 scrollDirection: Axis.vertical,
                 itemCount: data.media.length,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -96,17 +102,57 @@ class _AlbumViewState extends State<AlbumView> {
   }
 
   Widget buidImageItem(BuildContext context, CurrentAlbumInfo data, int index) {
+    GlobalKey gridItemKey = new GlobalKey();
+
     return Stack(
       children: [
         GestureDetector(
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => ViewerPage(index)),
+              MaterialPageRoute(builder: (context) => ViewerPage(index)),
             );
           },
+          onLongPressStart: (details) {
+            double tapPositionX = details.globalPosition.dx;
+            double tapPositionY = details.globalPosition.dy;
+            int selectedItemIndex = getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+            multiSelectStartIndex = selectedItemIndex;
+            if (YellowImagePicker.currentAlbumInfo.value
+                    .media[selectedItemIndex].isSelected ==
+                false) {
+              YellowImagePicker.currentAlbumInfo.value.addSelectedMediaByIndex(selectedItemIndex);
+            }
+            setState(() {});
+          },
+          onLongPressMoveUpdate: (details) {
+            double tapPositionX = details.globalPosition.dx;
+            double tapPositionY = details.globalPosition.dy;
+            int selectedItemIndex = getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+            multiSelectCurrentIndex = selectedItemIndex;
+
+            for(int i = multiSelectStartIndex; i <= selectedItemIndex; ++i) {
+              YellowImagePicker.currentAlbumInfo.value.addSelectedMediaByIndex(i);
+            }
+
+            for(int i = multiSelectCurrentMaxIndex; i > multiSelectCurrentIndex; --i) {
+              YellowImagePicker.currentAlbumInfo.value.removeSelectedMediaByIndex(i);
+            }
+
+            if(selectedItemIndex > multiSelectCurrentMaxIndex) {
+              multiSelectCurrentMaxIndex = selectedItemIndex;
+            }
+
+            setState(() {
+            });
+          },
+          onLongPressEnd: (details) {
+            multiSelectCurrentIndex = 0;
+            multiSelectCurrentMaxIndex = 0;
+            multiSelectStartIndex = 0;
+          },
           child: Container(
+            key: gridItemKey,
             decoration: BoxDecoration(
                 border: Border.all(
               color: Colors.black,
@@ -123,8 +169,33 @@ class _AlbumViewState extends State<AlbumView> {
                     highQuality: true)),
           ),
         ),
-        SelectButton(medium: _media[index],)
+        SelectButton(
+          medium: _media[index],
+        )
       ],
     );
+  }
+
+  int getSelectedIndex(GlobalKey<State<StatefulWidget>> gridItemKey, double tapPositionY, double tapPositionX) {
+    RenderBox _box = gridItemKey.currentContext.findRenderObject();
+    RenderBox _boxGrid = gridKey.currentContext.findRenderObject();
+    Offset position =
+        _boxGrid.localToGlobal(Offset.zero); //this is global position
+    double gridLeft = position.dx;
+    double gridTop = position.dy;
+    double gridWidth = _boxGrid.size.width;
+    
+    double gridPosition = tapPositionY - gridTop;
+    
+    //Get item position
+    int indexX = (gridPosition / _box.size.width).floor().toInt();
+    int indexY =
+        ((tapPositionX - gridLeft) / _box.size.width)
+            .floor()
+            .toInt();
+    int numberInRow =
+        ((gridWidth) / _box.size.width).floor().toInt();
+    int selectedItemIndex = indexX * numberInRow + indexY;
+    return selectedItemIndex;
   }
 }
