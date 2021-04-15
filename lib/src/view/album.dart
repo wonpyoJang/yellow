@@ -46,58 +46,75 @@ class _AlbumViewState extends State<AlbumView> {
         valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
       ));
     else
-      return Scaffold(
-        appBar: AppBar(
-          title: _albums.length > 1
-              ? DropdownButton<String>(
-                  value: _selectedAlbum.album.name,
-                  icon: const Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String newValue) async {
-                    _selectedAlbum = _albums
-                        .where((item) => item.album.name == newValue)
-                        .toList()[0];
-                    _media = await _selectedAlbum.getMedia();
-                    YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
-                        _selectedAlbum;
-                    YellowImagePicker.currentAlbumInfo.value =
-                        CurrentAlbumInfo();
-                    YellowImagePicker.currentAlbumInfo.value.media = _media;
-                    setState(() {});
-                  },
-                  items: _albums.map<DropdownMenuItem<String>>((Album value) {
-                    return DropdownMenuItem<String>(
-                      value: value.album.name,
-                      child: Text(value.album.name),
-                    );
-                  }).toList(),
-                )
-              : Text(_albums[0].album.name),
+      return WillPopScope(
+        onWillPop: () async {
+          _media = await _albums[0].getMedia();
+          YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
+              _albums[0];
+          YellowImagePicker.currentAlbumInfo.value.media = _media;
+          YellowImagePicker.currentAlbumInfo.value.albums = _albums;
+          return true;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: _albums.length > 1
+                ? DropdownButton<String>(
+                    value: _selectedAlbum.album.name,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String newValue) async {
+                      YellowImagePicker.currentAlbumInfo.value =
+                          CurrentAlbumInfo();
+
+                      _selectedAlbum = _albums
+                          .where((item) => item.album.name == newValue)
+                          .toList()[0];
+                      _media = await _selectedAlbum.getMedia();
+                      YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
+                          _selectedAlbum;
+                      YellowImagePicker.currentAlbumInfo.value.media = _media;
+                      YellowImagePicker.currentAlbumInfo.value.albums = _albums;
+                      setState(() {});
+                    },
+                    items: _albums.map<DropdownMenuItem<String>>((Album value) {
+                      return DropdownMenuItem<String>(
+                        value: value.album.name,
+                        child: Text(value.album.name),
+                      );
+                    }).toList(),
+                  )
+                : Text(_albums[0].album.name),
+          ),
+          body: ValueListenableBuilder(
+              valueListenable: YellowImagePicker.currentAlbumInfo,
+              builder:
+                  (BuildContext context, CurrentAlbumInfo data, Widget child) {
+
+                if(data.media == null ||  data.media.length == 0) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return GridView.builder(
+                    key: gridKey,
+                    scrollDirection: Axis.vertical,
+                    itemCount: data.media.length,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 150,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0),
+                    itemBuilder: (context, index) {
+                      return buidImageItem(context, data, index);
+                    },
+                  );
+                }
+              }),
         ),
-        body: ValueListenableBuilder(
-            valueListenable: YellowImagePicker.currentAlbumInfo,
-            builder:
-                (BuildContext context, CurrentAlbumInfo data, Widget child) {
-              return GridView.builder(
-                key: gridKey,
-                scrollDirection: Axis.vertical,
-                itemCount: data.media.length,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 150,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 0),
-                itemBuilder: (context, index) {
-                  return buidImageItem(context, data, index);
-                },
-              );
-            }),
       );
   }
 
