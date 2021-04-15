@@ -25,7 +25,7 @@ class _ViewerPageState extends State<ViewerPage> {
     controller = PageController(initialPage: widget.index);
     currentPage = widget.index;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      precacheLeftRight(widget.index, context);
+      preCacheLeftRight(widget.index, context);
     });
   }
 
@@ -50,7 +50,7 @@ class _ViewerPageState extends State<ViewerPage> {
                   setState(() {
                     currentPage = page;
                   });
-                  precacheLeftRight(page, context);
+                  preCacheLeftRight(page, context);
                 },
                 children: [
                   ...YellowImagePicker.currentAlbumInfo.value.media
@@ -81,17 +81,17 @@ class _ViewerPageState extends State<ViewerPage> {
     );
   }
 
-  void precacheLeftRight(int page, BuildContext context) {
+  void preCacheLeftRight(int page, BuildContext context) {
 
     var media = YellowImagePicker.currentAlbumInfo.value.media;
 
-    precacheItem(page-2, media, context);
-    precacheItem(page-1, media, context);
-    precacheItem(page+1, media, context);
-    precacheItem(page+2, media, context);
+    preCacheItem(page-2, media, context);
+    preCacheItem(page-1, media, context);
+    preCacheItem(page+1, media, context);
+    preCacheItem(page+2, media, context);
   }
 
-  void precacheItem(int page, List<Medium> media, BuildContext context) {
+  void preCacheItem(int page, List<Medium> media, BuildContext context) {
     if((page < media.length) && (page >= 0)) {
       var image = Image(
         fit: BoxFit.cover,
