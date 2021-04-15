@@ -109,7 +109,7 @@ class _AlbumViewState extends State<AlbumView> {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0),
                     itemBuilder: (context, index) {
-                      return buidImageItem(context, data, index);
+                      return buildImageItem(context, data, index);
                     },
                   );
                 }
@@ -118,7 +118,7 @@ class _AlbumViewState extends State<AlbumView> {
       );
   }
 
-  Widget buidImageItem(BuildContext context, CurrentAlbumInfo data, int index) {
+  Widget buildImageItem(BuildContext context, CurrentAlbumInfo data, int index) {
     GlobalKey gridItemKey = new GlobalKey();
 
     return Stack(
