@@ -128,58 +128,57 @@ class _AlbumViewState extends State<AlbumView>
                     }
                   }),
               SizeTransition(
-                  axisAlignment: 1.0,
-                  sizeFactor: animation,
-                  child: Positioned.fill(
-                    child: Container(
-                        color: Colors.blue,
-                        child: ListView.builder(
-                            itemCount: _albums.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  YellowImagePicker.currentAlbumInfo.value =
-                                      CurrentAlbumInfo();
+                axisAlignment: 1.0,
+                sizeFactor: animation,
+                child: Container(
+                      color: Colors.blue,
+                      child: ListView.builder(
+                          itemCount: _albums.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () async {
+                                YellowImagePicker.currentAlbumInfo.value =
+                                    CurrentAlbumInfo();
 
-                                  _selectedAlbum = _albums[index];
-                                  _media = await _selectedAlbum.getMedia();
-                                  YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
-                                      _selectedAlbum;
-                                  YellowImagePicker.currentAlbumInfo.value.media = _media;
-                                  expandController.reverse();
-                                  setState(() {});
-                                },
-                                child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                    child: Row(children: [
-                                      Container(width: 75,
-                                        height: 75,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: pg.AlbumThumbnailProvider(
-                                              albumId: _albums[index].album.id,
-                                              mediumType: _albums[index].album.mediumType,
-                                              highQuality: true,
-                                            ),
+                                _selectedAlbum = _albums[index];
+                                _media = await _selectedAlbum.getMedia();
+                                YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
+                                    _selectedAlbum;
+                                YellowImagePicker.currentAlbumInfo.value.media = _media;
+                                expandController.reverse();
+                                setState(() {});
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                  child: Row(children: [
+                                    Container(width: 75,
+                                      height: 75,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: pg.AlbumThumbnailProvider(
+                                            albumId: _albums[index].album.id,
+                                            mediumType: _albums[index].album.mediumType,
+                                            highQuality: true,
                                           ),
-                                        ),),
-                                      SizedBox(width: 10),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(_albums[index].album.name),
-                                          SizedBox(height: 5),
-                                          Text(_albums[index].album.count.toString()),
-                                        ],
-                                      )
-                                    ],)
-                                ),
-                              );
-                            },
-                        )
-                    ),
-                  )),
+                                        ),
+                                      ),),
+                                    SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(_albums[index].album.name),
+                                        SizedBox(height: 5),
+                                        Text(_albums[index].album.count.toString()),
+                                      ],
+                                    )
+                                  ],)
+                              ),
+                            );
+                          },
+                      )
+                  ),
+              ),
             ],
           )),
     );
