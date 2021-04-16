@@ -8,6 +8,13 @@ class YellowImagePicker {
 
   static ValueNotifier<CurrentAlbumInfo> currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
 
+  static String yellowPickerRoot = "/yellow";
+
+  static void exitYellowPicker(BuildContext context) {
+    Navigator.of(context).popUntil(ModalRoute.withName(YellowImagePicker.yellowPickerRoot));
+    Navigator.of(context).pop();
+  }
+
   static void pickImages(BuildContext context,
       {@required String title, double height = 294}) async {
 
@@ -16,6 +23,7 @@ class YellowImagePicker {
 
     showModalBottomSheet(
         context: context,
+        routeSettings: RouteSettings(name: yellowPickerRoot),
         builder: (BuildContext context) {
           return Container(
             height: height,

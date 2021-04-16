@@ -3,6 +3,7 @@ import 'package:photo_gallery/photo_gallery.dart' as pg;
 import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
 import 'package:yellow/src/widget/select_button.dart';
+import 'package:yellow/src/yellow_image_picker.dart';
 
 import '../../yellow.dart';
 import '../models/album.dart';
@@ -79,7 +80,8 @@ class _AlbumViewState extends State<AlbumView>
         YellowImagePicker.currentAlbumInfo.value.selectedAlbum = _albums[0];
         YellowImagePicker.currentAlbumInfo.value.media = _media;
         YellowImagePicker.currentAlbumInfo.value.albums = _albums;
-        return true;
+        YellowImagePicker.exitYellowPicker(context);
+        return false;
       },
       child: Scaffold(
           appBar: AppBar(
