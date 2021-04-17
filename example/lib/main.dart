@@ -33,6 +33,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  List<File> imageFiles = [];
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _promptPermissionSetting() async {
@@ -49,15 +52,33 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Center(
-          child: MaterialButton(
-              onPressed: () async {
-                if (await _promptPermissionSetting()) {
-                  YellowImagePicker.pickImages(context, title: "yellow picker");
-                }
+        body: Column(
+          children: [
+            GridView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: imageFiles.length,
+              gridDelegate:
+              SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 150,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0),
+              itemBuilder: (context, index) {
+                return Image.file(imageFiles[index]);
               },
-              color: Colors.grey[200],
-              child: Text("Add Photo")),
+            ),
+            MaterialButton(
+                onPressed: () async {
+                  if (await _promptPermissionSetting()) {
+                    imageFiles = await YellowImagePicker.pickImages(context, title: "yellow picker");
+                    setState(() {
+                    });
+                  }
+                },
+                color: Colors.grey[200],
+                child: Text("Add Photo")),
+          ],
         ));
   }
 }

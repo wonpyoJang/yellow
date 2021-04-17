@@ -49,6 +49,7 @@ class YellowImagePicker {
                       ),
                       GestureDetector(
                         onTap: () {
+                          isConfirmed = true;
                           exitYellowPicker(context);
                         },
                         child: Container(
