@@ -39,7 +39,7 @@ class _ViewerPageState extends State<ViewerPage> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-              "${currentPage+1}/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
+              "${currentPage + 1}/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
         ),
         body: ValueListenableBuilder<CurrentAlbumInfo>(
             valueListenable: YellowImagePicker.currentAlbumInfo,
@@ -82,17 +82,16 @@ class _ViewerPageState extends State<ViewerPage> {
   }
 
   void preCacheLeftRight(int page, BuildContext context) {
-
     var media = YellowImagePicker.currentAlbumInfo.value.media;
 
-    preCacheItem(page-2, media, context);
-    preCacheItem(page-1, media, context);
-    preCacheItem(page+1, media, context);
-    preCacheItem(page+2, media, context);
+    preCacheItem(page - 2, media, context);
+    preCacheItem(page - 1, media, context);
+    preCacheItem(page + 1, media, context);
+    preCacheItem(page + 2, media, context);
   }
 
   void preCacheItem(int page, List<Medium> media, BuildContext context) {
-    if((page < media.length) && (page >= 0)) {
+    if ((page < media.length) && (page >= 0)) {
       var image = Image(
         fit: BoxFit.cover,
         image: pg.PhotoProvider(mediumId: media[page].id),

@@ -93,4 +93,3 @@ class _ImagePanelState extends State<ImagePanel> {
     return SelectButton(medium: _media[index]);
   }
 }
-

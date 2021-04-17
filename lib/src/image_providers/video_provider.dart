@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -47,25 +46,25 @@ class _VideoProviderState extends State<VideoProvider> {
     return _controller == null || !_controller.value.initialized
         ? Container()
         : Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
-        ),
-        FlatButton(
-          onPressed: () {
-            setState(() {
-              _controller.value.isPlaying
-                  ? _controller.pause()
-                  : _controller.play();
-            });
-          },
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      ],
-    );
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              ),
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  });
+                },
+                child: Icon(
+                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                ),
+              ),
+            ],
+          );
   }
 }

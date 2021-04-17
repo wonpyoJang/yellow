@@ -33,7 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   List<File> imageFiles = [];
 
   @override
@@ -58,8 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: imageFiles.length,
-              gridDelegate:
-              SliverGridDelegateWithMaxCrossAxisExtent(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 150,
                   childAspectRatio: 1,
                   crossAxisSpacing: 0,
@@ -71,9 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
             MaterialButton(
                 onPressed: () async {
                   if (await _promptPermissionSetting()) {
-                    imageFiles = await YellowImagePicker.pickImages(context, title: "yellow picker");
-                    setState(() {
-                    });
+                    imageFiles = await YellowImagePicker.pickImages(context,
+                        title: "yellow picker");
+                    setState(() {});
                   }
                 },
                 color: Colors.grey[200],

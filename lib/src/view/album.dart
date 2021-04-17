@@ -100,10 +100,10 @@ class _AlbumViewState extends State<AlbumView>
                 : Text(""),
             actions: [
               GestureDetector(
-                onTap: () {
-                  YellowImagePicker.isConfirmed = true;
-                  YellowImagePicker.exitYellowPicker(context);
-                },
+                  onTap: () {
+                    YellowImagePicker.isConfirmed = true;
+                    YellowImagePicker.exitYellowPicker(context);
+                  },
                   child: Container(
                       margin: EdgeInsets.only(right: 20),
                       width: 44,

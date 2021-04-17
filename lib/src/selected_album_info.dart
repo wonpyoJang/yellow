@@ -21,7 +21,7 @@ class CurrentAlbumInfo {
   List<Medium> get media => _media;
 
   // ignore: unnecessary_getters_setters
-  set selectedAlbum(Album album) =>  _selectedAlbum = album;
+  set selectedAlbum(Album album) => _selectedAlbum = album;
   // ignore: unnecessary_getters_setters
   set media(List<Medium> media) => _media = media;
   // ignore: unnecessary_getters_setters
@@ -40,7 +40,7 @@ class CurrentAlbumInfo {
   }
 
   void addSelectedMediaByIndex(int index) {
-    if(media[index].isSelected) return;
+    if (media[index].isSelected) return;
 
     _selectedMedia.addLast(_media[index]);
     _media[index].isSelected = true;
@@ -74,7 +74,7 @@ class CurrentAlbumInfo {
   }
 
   void toggleSelect(Medium medium) {
-    if(medium.isSelected) {
+    if (medium.isSelected) {
       removeSelectedMedia(medium);
     } else {
       addSelectedMedia(medium);
@@ -83,7 +83,7 @@ class CurrentAlbumInfo {
 
   void calculateOrder() {
     int cnt = 1;
-    for(var item in _selectedMedia) {
+    for (var item in _selectedMedia) {
       item.order = cnt;
       ++cnt;
     }
@@ -92,7 +92,7 @@ class CurrentAlbumInfo {
   Future<List<File>> getSelectedFiles() async {
     List<File> files = [];
 
-    for(Medium item in _selectedMedia) {
+    for (Medium item in _selectedMedia) {
       File file = await pg.PhotoGallery.getFile(mediumId: item.id);
       files.add(file);
     }
@@ -100,10 +100,8 @@ class CurrentAlbumInfo {
   }
 
   void changeSelectedAlbum(Album newAlbum, List<Medium> newMedia) {
-    _selectedAlbum =
-        newAlbum;
+    _selectedAlbum = newAlbum;
     _media = newMedia;
     _selectedMedia.clear();
   }
-
 }
