@@ -40,32 +40,37 @@ class YellowImagePicker {
                   iconTheme: IconThemeData(
                     color: Colors.white,
                   ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          isConfirmed = true;
-                          exitYellowPicker(context);
-                        },
-                        child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.yellow,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(13.0)),
+                  title: ValueListenableBuilder<CurrentAlbumInfo>(
+                      valueListenable: currentAlbumInfo,
+                      builder: (context, value, child) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(color: Colors.white),
                             ),
-                            child: Icon(Icons.arrow_upward_outlined,
-                                color: Colors.black)),
-                      )
-                    ],
-                  )),
+                            if (currentAlbumInfo.value.isExistSelected)
+                              GestureDetector(
+                                onTap: () {
+                                  isConfirmed = true;
+                                  exitYellowPicker(context);
+                                },
+                                child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(13.0)),
+                                    ),
+                                    child: Icon(Icons.arrow_upward_outlined,
+                                        color: Colors.black)),
+                              )
+                          ],
+                        );
+                      })),
               body: ImagePanel(),
               bottomNavigationBar: Container(
                 height: 44,

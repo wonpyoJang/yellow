@@ -20,6 +20,10 @@ class CurrentAlbumInfo {
   // ignore: unnecessary_getters_setters
   List<Medium> get media => _media;
 
+  int get selectedLength => _selectedMedia.length;
+
+  bool get isExistSelected => _selectedMedia.length > 0;
+
   // ignore: unnecessary_getters_setters
   set selectedAlbum(Album album) => _selectedAlbum = album;
   // ignore: unnecessary_getters_setters
@@ -104,4 +108,5 @@ class CurrentAlbumInfo {
     _media = newMedia;
     _selectedMedia.clear();
   }
+
 }
