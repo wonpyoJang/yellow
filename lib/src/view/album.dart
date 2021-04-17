@@ -129,6 +129,7 @@ class _AlbumViewState extends State<AlbumView>
                       );
                     }
                   }),
+              //drop down list for changing current album (default value : all media).
               SizeTransition(
                 axisAlignment: 1.0,
                 sizeFactor: animation,
