@@ -3,6 +3,8 @@ import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
 import 'package:yellow/src/widget/select_button.dart';
 import 'package:yellow/src/yellow_picker_adapter.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:photo_gallery/photo_gallery.dart' as pg;
 
 import '../../yellow.dart';
 import '../models/album.dart';
@@ -57,39 +59,37 @@ class _ImagePanelState extends State<ImagePanel> {
     return ValueListenableBuilder<CurrentAlbumInfo>(
         valueListenable: YellowImagePicker.currentAlbumInfo,
         builder: (context, value, child) {
-          return Stack(
-            children: [buildImage(context, index), buildSelectButton(index)],
-          );
+          return buildImage(context, index);
         });
   }
 
   Widget buildImage(BuildContext context, int index) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ViewerPage(index)),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-            color: _media[index].isSelected ? Colors.yellow : Colors.black,
-            width: 5,
-          )),
-          child: Image(
-              width: 150,
-              height: 250,
-              fit: BoxFit.cover,
-              image: ThumbnailProvider(
-                  height: 10000,
-                  width: 10000,
-                  medium: _media[index],
-                  highQuality: true)),
-        ));
-  }
 
-  Widget buildSelectButton(int index) {
-    return SelectButton(medium: _media[index]);
+    pg.ThumbnailProvider thumbnailProvider = _media[index].getThumbnail();
+
+    return Stack(
+      children: [
+        GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ViewerPage(index)),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                color: _media[index].isSelected ? Colors.yellow : Colors.black,
+                width: 5,
+              )),
+              child: Image(
+                  width: 150,
+                  height: 250,
+                  fit: BoxFit.cover,
+                  image: thumbnailProvider),
+            )),
+            SelectButton(key: UniqueKey(), medium: _media[index]),
+      ],
+    );
   }
 }

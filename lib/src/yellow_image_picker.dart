@@ -13,6 +13,7 @@ class YellowImagePicker {
 
   static String yellowPickerRoot = "/yellow";
 
+  // check if user confirmed uploading images;
   static bool isConfirmed = false;
 
   static void exitYellowPicker(BuildContext context) {
@@ -25,8 +26,6 @@ class YellowImagePicker {
       {@required String title, double height = 294}) async {
     // initialize current state
     currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
-
-    // check if user confirmed uploading images;
 
     await showModalBottomSheet(
         context: context,
