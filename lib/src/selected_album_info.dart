@@ -98,4 +98,12 @@ class CurrentAlbumInfo {
     }
     return files;
   }
+
+  void changeSelectedAlbum(Album newAlbum, List<Medium> newMedia) {
+    _selectedAlbum =
+        newAlbum;
+    _media = newMedia;
+    _selectedMedia.clear();
+  }
+
 }

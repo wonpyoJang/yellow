@@ -140,14 +140,9 @@ class _AlbumViewState extends State<AlbumView>
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () async {
-                                YellowImagePicker.currentAlbumInfo.value =
-                                    CurrentAlbumInfo();
-
                                 _selectedAlbum = _albums[index];
                                 _media = await _selectedAlbum.getMedia();
-                                YellowImagePicker.currentAlbumInfo.value.selectedAlbum =
-                                    _selectedAlbum;
-                                YellowImagePicker.currentAlbumInfo.value.media = _media;
+                                YellowImagePicker.currentAlbumInfo.value.changeSelectedAlbum(_selectedAlbum, _media);
                                 expandController.reverse();
                                 setState(() {});
                               },
