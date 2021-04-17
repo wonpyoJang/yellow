@@ -243,8 +243,8 @@ class _AlbumViewState extends State<AlbumView>
             key: gridItemKey,
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.black,
-                  width: 1,
+                  color: _media[index].isSelected ? Colors.yellow : Colors.black,
+                  width: 3,
                 )),
             child: Image(
                 width: 150,

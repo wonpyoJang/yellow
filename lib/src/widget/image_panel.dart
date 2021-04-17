@@ -74,8 +74,8 @@ class _ImagePanelState extends State<ImagePanel> {
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(
-            color: Colors.black,
-            width: 1,
+            color: _media[index].isSelected ? Colors.yellow : Colors.black,
+            width: 5,
           )),
           child: Image(
               width: 150,
