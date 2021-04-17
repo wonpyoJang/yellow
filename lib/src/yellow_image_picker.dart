@@ -8,21 +8,24 @@ import 'view/album.dart';
 import 'widget/image_panel.dart';
 
 class YellowImagePicker {
-
-  static ValueNotifier<CurrentAlbumInfo> currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
+  static ValueNotifier<CurrentAlbumInfo> currentAlbumInfo =
+      ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
 
   static String yellowPickerRoot = "/yellow";
 
   static void exitYellowPicker(BuildContext context) {
-    Navigator.of(context).popUntil(ModalRoute.withName(YellowImagePicker.yellowPickerRoot));
+    Navigator.of(context)
+        .popUntil(ModalRoute.withName(YellowImagePicker.yellowPickerRoot));
     Navigator.of(context).pop();
   }
 
   static Future<List<File>> pickImages(BuildContext context,
       {@required String title, double height = 294}) async {
-
     // initialize current state
     currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
+
+    // check if user confirmed uploading images;
+    bool isConfirmed = false;
 
     await showModalBottomSheet(
         context: context,
@@ -44,15 +47,21 @@ class YellowImagePicker {
                         title,
                         style: TextStyle(color: Colors.white),
                       ),
-                      Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.all(Radius.circular(13.0)),
-                          ),
-                          child:
-                          Icon(Icons.arrow_upward_outlined, color: Colors.black))
+                      GestureDetector(
+                        onTap: () {
+                          exitYellowPicker(context);
+                        },
+                        child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(13.0)),
+                            ),
+                            child: Icon(Icons.arrow_upward_outlined,
+                                color: Colors.black)),
+                      )
                     ],
                   )),
               body: ImagePanel(),
@@ -93,6 +102,8 @@ class YellowImagePicker {
             ),
           );
         });
-    return YellowImagePicker.currentAlbumInfo.value.getSelectedFiles();
+    return isConfirmed
+        ? YellowImagePicker.currentAlbumInfo.value.getSelectedFiles()
+        : null;
   }
 }
