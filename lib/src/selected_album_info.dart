@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:yellow/src/yellow_image_picker.dart';
+import 'package:photo_gallery/photo_gallery.dart' as pg;
 
 import 'models/album.dart';
 import 'models/medium.dart';
@@ -9,7 +11,7 @@ class CurrentAlbumInfo {
   List<Album> _albums;
   Album _selectedAlbum;
   List<Medium> _media;
-  Queue _selectedMedia = Queue();
+  Queue<Medium> _selectedMedia = Queue();
 
   // ignore: unnecessary_getters_setters
   List<Album> get albums => _albums;
@@ -85,5 +87,15 @@ class CurrentAlbumInfo {
       item.order = cnt;
       ++cnt;
     }
+  }
+
+  Future<List<File>> getSelectedFiles() async {
+    List<File> files = [];
+
+    for(Medium item in _selectedMedia) {
+      File file = await pg.PhotoGallery.getFile(mediumId: item.id);
+      files.add(file);
+    }
+    return files;
   }
 }
