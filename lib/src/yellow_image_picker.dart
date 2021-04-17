@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:photo_gallery/photo_gallery.dart';
 
 import 'selected_album_info.dart';
 import 'view/album.dart';
@@ -15,13 +18,13 @@ class YellowImagePicker {
     Navigator.of(context).pop();
   }
 
-  static void pickImages(BuildContext context,
+  static Future<List<File>> pickImages(BuildContext context,
       {@required String title, double height = 294}) async {
 
     // initialize current state
     currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
 
-    showModalBottomSheet(
+    await showModalBottomSheet(
         context: context,
         routeSettings: RouteSettings(name: yellowPickerRoot),
         builder: (BuildContext context) {
@@ -90,5 +93,6 @@ class YellowImagePicker {
             ),
           );
         });
+    return YellowImagePicker.currentAlbumInfo.value.getSelectedFiles();
   }
 }
