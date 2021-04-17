@@ -87,103 +87,124 @@ class _AlbumViewState extends State<AlbumView>
           appBar: AppBar(
             title: _albums.length > 1
                 ? GestureDetector(
-                onTap: () {
-                  if (isExpanded) {
-                    expandController.reverse();
-                    isExpanded = false;
-                  } else {
-                    expandController.forward();
-                    isExpanded = true;
-                  }
-                },
-                child: Text(_albums[0].album.name))
+                    onTap: () {
+                      if (isExpanded) {
+                        expandController.reverse();
+                        isExpanded = false;
+                      } else {
+                        expandController.forward();
+                        isExpanded = true;
+                      }
+                    },
+                    child: Text(_albums[0].album.name))
                 : Text(""),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  YellowImagePicker.isConfirmed = true;
+                  YellowImagePicker.exitYellowPicker(context);
+                },
+                  child: Container(
+                      margin: EdgeInsets.only(right: 20),
+                      width: 44,
+                      height: 44,
+                      child: Center(child: Text("Send"))))
+            ],
           ),
           body: Stack(
             children: [
               _isLoading
                   ? Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
-                  ))
+                      child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+                    ))
                   : ValueListenableBuilder(
-                  valueListenable: YellowImagePicker.currentAlbumInfo,
-                  builder: (BuildContext context, CurrentAlbumInfo data,
-                      Widget child) {
-                    if (data.media == null || data.media.length == 0) {
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      return GridView.builder(
-                        key: gridKey,
-                        scrollDirection: Axis.vertical,
-                        itemCount: data.media.length,
-                        gridDelegate:
-                        SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 150,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 0,
-                            mainAxisSpacing: 0),
-                        itemBuilder: (context, index) {
-                          return buildImageItem(context, data, index);
-                        },
-                      );
-                    }
-                  }),
+                      valueListenable: YellowImagePicker.currentAlbumInfo,
+                      builder: (BuildContext context, CurrentAlbumInfo data,
+                          Widget child) {
+                        if (data.media == null || data.media.length == 0) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return GridView.builder(
+                            key: gridKey,
+                            scrollDirection: Axis.vertical,
+                            itemCount: data.media.length,
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 150,
+                                    childAspectRatio: 1,
+                                    crossAxisSpacing: 0,
+                                    mainAxisSpacing: 0),
+                            itemBuilder: (context, index) {
+                              return buildImageItem(context, data, index);
+                            },
+                          );
+                        }
+                      }),
               //drop down list for changing current album (default value : all media).
               SizeTransition(
                 axisAlignment: 1.0,
                 sizeFactor: animation,
                 child: Container(
-                      color: Colors.blue,
-                      child: ListView.builder(
-                          itemCount: _albums.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () async {
-                                _selectedAlbum = _albums[index];
-                                _media = await _selectedAlbum.getMedia();
-                                YellowImagePicker.currentAlbumInfo.value.changeSelectedAlbum(_selectedAlbum, _media);
-                                expandController.reverse();
-                                setState(() {});
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                  child: Row(children: [
-                                    Container(width: 75,
-                                      height: 75,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: pg.AlbumThumbnailProvider(
-                                            albumId: _albums[index].album.id,
-                                            mediumType: _albums[index].album.mediumType,
-                                            highQuality: true,
-                                          ),
-                                        ),
-                                      ),),
-                                    SizedBox(width: 10),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(_albums[index].album.name),
-                                        SizedBox(height: 5),
-                                        Text(_albums[index].album.count.toString()),
-                                      ],
-                                    )
-                                  ],)
-                              ),
-                            );
+                    color: Colors.blue,
+                    child: ListView.builder(
+                      itemCount: _albums.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () async {
+                            _selectedAlbum = _albums[index];
+                            _media = await _selectedAlbum.getMedia();
+                            YellowImagePicker.currentAlbumInfo.value
+                                .changeSelectedAlbum(_selectedAlbum, _media);
+                            expandController.reverse();
+                            setState(() {});
                           },
-                      )
-                  ),
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 10),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 75,
+                                    height: 75,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: pg.AlbumThumbnailProvider(
+                                          albumId: _albums[index].album.id,
+                                          mediumType:
+                                              _albums[index].album.mediumType,
+                                          highQuality: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(_albums[index].album.name),
+                                      SizedBox(height: 5),
+                                      Text(_albums[index]
+                                          .album
+                                          .count
+                                          .toString()),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        );
+                      },
+                    )),
               ),
             ],
           )),
     );
   }
 
-  Widget buildImageItem(BuildContext context, CurrentAlbumInfo data,
-      int index) {
+  Widget buildImageItem(
+      BuildContext context, CurrentAlbumInfo data, int index) {
     GlobalKey gridItemKey = new GlobalKey();
 
     return Stack(
@@ -199,10 +220,10 @@ class _AlbumViewState extends State<AlbumView>
             double tapPositionX = details.globalPosition.dx;
             double tapPositionY = details.globalPosition.dy;
             int selectedItemIndex =
-            getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
             multiSelectStartIndex = selectedItemIndex;
             if (YellowImagePicker.currentAlbumInfo.value
-                .media[selectedItemIndex].isSelected ==
+                    .media[selectedItemIndex].isSelected ==
                 false) {
               YellowImagePicker.currentAlbumInfo.value
                   .addSelectedMediaByIndex(selectedItemIndex);
@@ -213,7 +234,7 @@ class _AlbumViewState extends State<AlbumView>
             double tapPositionX = details.globalPosition.dx;
             double tapPositionY = details.globalPosition.dy;
             int selectedItemIndex =
-            getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
             multiSelectCurrentIndex = selectedItemIndex;
 
             for (int i = multiSelectStartIndex; i <= selectedItemIndex; ++i) {
@@ -222,8 +243,8 @@ class _AlbumViewState extends State<AlbumView>
             }
 
             for (int i = multiSelectCurrentMaxIndex;
-            i > multiSelectCurrentIndex;
-            --i) {
+                i > multiSelectCurrentIndex;
+                --i) {
               YellowImagePicker.currentAlbumInfo.value
                   .removeSelectedMediaByIndex(i);
             }
@@ -243,9 +264,9 @@ class _AlbumViewState extends State<AlbumView>
             key: gridItemKey,
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: _media[index].isSelected ? Colors.yellow : Colors.black,
-                  width: 3,
-                )),
+              color: _media[index].isSelected ? Colors.yellow : Colors.black,
+              width: 3,
+            )),
             child: Image(
                 width: 150,
                 height: 150,
@@ -269,7 +290,7 @@ class _AlbumViewState extends State<AlbumView>
     RenderBox _box = gridItemKey.currentContext.findRenderObject();
     RenderBox _boxGrid = gridKey.currentContext.findRenderObject();
     Offset position =
-    _boxGrid.localToGlobal(Offset.zero); //this is global position
+        _boxGrid.localToGlobal(Offset.zero); //this is global position
     double gridLeft = position.dx;
     double gridTop = position.dy;
     double gridWidth = _boxGrid.size.width;

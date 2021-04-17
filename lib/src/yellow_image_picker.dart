@@ -13,6 +13,8 @@ class YellowImagePicker {
 
   static String yellowPickerRoot = "/yellow";
 
+  static bool isConfirmed = false;
+
   static void exitYellowPicker(BuildContext context) {
     Navigator.of(context)
         .popUntil(ModalRoute.withName(YellowImagePicker.yellowPickerRoot));
@@ -25,7 +27,6 @@ class YellowImagePicker {
     currentAlbumInfo = ValueNotifier<CurrentAlbumInfo>(CurrentAlbumInfo());
 
     // check if user confirmed uploading images;
-    bool isConfirmed = false;
 
     await showModalBottomSheet(
         context: context,
