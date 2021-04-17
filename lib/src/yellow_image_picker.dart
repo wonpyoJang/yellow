@@ -104,6 +104,6 @@ class YellowImagePicker {
         });
     return isConfirmed
         ? YellowImagePicker.currentAlbumInfo.value.getSelectedFiles()
-        : null;
+        : [];
   }
 }
