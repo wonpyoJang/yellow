@@ -62,5 +62,4 @@ class Medium {
     PaletteGenerator paletteGenerator =  await PaletteGenerator.fromImage(image);
     return paletteGenerator.dominantColor.color.computeLuminance() < 0.2;
   }
-
 }

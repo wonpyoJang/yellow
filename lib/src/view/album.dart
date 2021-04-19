@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
 import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
@@ -216,7 +217,10 @@ class _AlbumViewState extends State<AlbumView>
               MaterialPageRoute(builder: (context) => ViewerPage(index)),
             );
           },
-          onLongPressStart: (details) {
+          onLongPressStart: (details) async {
+            //need android permission : <uses-permission android:name="android.permission.VIBRATE" />
+            await HapticFeedback.heavyImpact();
+
             double tapPositionX = details.globalPosition.dx;
             double tapPositionY = details.globalPosition.dy;
             int selectedItemIndex =
@@ -228,6 +232,7 @@ class _AlbumViewState extends State<AlbumView>
               YellowImagePicker.currentAlbumInfo.value
                   .addSelectedMediaByIndex(selectedItemIndex);
             }
+
             setState(() {});
           },
           onLongPressMoveUpdate: (details) {
