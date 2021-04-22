@@ -15,6 +15,7 @@ dependencies:
   video_player:
   transparent_image:
   palette_generator:
+  camera:
 
 dev_dependencies:
   flutter_test:
