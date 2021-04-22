@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yellow/src/image_providers/thumbnail_provider.dart';
 import 'package:yellow/src/view/viewer.dart';
 import 'package:yellow/src/widget/select_button.dart';
 import 'package:yellow/src/yellow_picker_adapter.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
 
 import '../../yellow.dart';

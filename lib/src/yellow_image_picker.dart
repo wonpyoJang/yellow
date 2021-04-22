@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:photo_gallery/photo_gallery.dart';
 
 import 'selected_album_info.dart';
 import 'view/album.dart';

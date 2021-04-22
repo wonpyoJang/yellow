@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
 import 'dart:ui' as ui;
 
@@ -56,10 +54,4 @@ class Medium {
     return imageInfo.image;
   }
 
-  Future<bool> isImageDark() async {
-    ui.Image image = await getThumbnailImage();
-
-    PaletteGenerator paletteGenerator =  await PaletteGenerator.fromImage(image);
-    return paletteGenerator.dominantColor.color.computeLuminance() < 0.2;
-  }
 }
