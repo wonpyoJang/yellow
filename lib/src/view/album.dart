@@ -29,6 +29,7 @@ class _AlbumViewState extends State<AlbumView>
   AnimationController expandController;
   Animation<double> animation;
   bool isExpanded = false;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -126,19 +127,24 @@ class _AlbumViewState extends State<AlbumView>
                         if (data.media == null || data.media.length == 0) {
                           return Center(child: CircularProgressIndicator());
                         } else {
-                          return GridView.builder(
-                            key: gridKey,
-                            scrollDirection: Axis.vertical,
-                            itemCount: data.media.length,
-                            gridDelegate:
-                                SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 150,
-                                    childAspectRatio: 1,
-                                    crossAxisSpacing: 0,
-                                    mainAxisSpacing: 0),
-                            itemBuilder: (context, index) {
-                              return buildImageItem(context, data, index);
-                            },
+                          return Scrollbar(
+                            isAlwaysShown: true,
+                            controller: _scrollController,
+                            child: GridView.builder(
+                              controller: _scrollController,
+                              key: gridKey,
+                              scrollDirection: Axis.vertical,
+                              itemCount: data.media.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 150,
+                                      childAspectRatio: 1,
+                                      crossAxisSpacing: 0,
+                                      mainAxisSpacing: 0),
+                              itemBuilder: (context, index) {
+                                return buildImageItem(context, data, index);
+                              },
+                            ),
                           );
                         }
                       }),
