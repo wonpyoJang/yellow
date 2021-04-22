@@ -134,7 +134,7 @@ class _AlbumViewState extends State<AlbumView>
                               controller: _scrollController,
                               key: gridKey,
                               scrollDirection: Axis.vertical,
-                              itemCount: data.media.length,
+                              itemCount: data.media.length + 1,
                               gridDelegate:
                                   SliverGridDelegateWithMaxCrossAxisExtent(
                                       maxCrossAxisExtent: 150,
@@ -142,7 +142,12 @@ class _AlbumViewState extends State<AlbumView>
                                       crossAxisSpacing: 0,
                                       mainAxisSpacing: 0),
                               itemBuilder: (context, index) {
-                                return buildImageItem(context, data, index);
+                                if (index == 0) {
+                                  return buildCameraButton();
+                                } else {
+                                  return buildImageItem(
+                                      context, data, index - 1);
+                                }
                               },
                             ),
                           );
@@ -314,5 +319,20 @@ class _AlbumViewState extends State<AlbumView>
     int numberInRow = ((gridWidth) / _box.size.width).floor().toInt();
     int selectedItemIndex = indexX * numberInRow + indexY;
     return selectedItemIndex;
+  }
+
+  Widget buildCameraButton() {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        child: Icon(Icons.camera_enhance),
+        decoration: BoxDecoration(
+            color: Colors.grey,
+            border: Border.all(
+              color: Colors.black,
+              width: 3,
+            )),
+      ),
+    );
   }
 }
