@@ -4,36 +4,10 @@ import 'package:yellow/src/models/medium.dart';
 
 import '../../yellow.dart';
 
-class SelectButton extends StatefulWidget {
+class SelectButton extends StatelessWidget {
   final Medium medium;
 
   SelectButton({Key key, this.medium});
-
-  @override
-  _SelectButtonState createState() => _SelectButtonState();
-}
-
-class _SelectButtonState extends State<SelectButton> {
-
-  bool isDark = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initAsync();
-
-  }
-
-  initAsync() async {
-    this.isDark = await widget.medium.isImageDark();
-    print("isBlack : " + this.isDark.toString());
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +16,7 @@ class _SelectButtonState extends State<SelectButton> {
         alignment: Alignment.topRight,
         child: GestureDetector(
           onTap: () {
-            YellowImagePicker.currentAlbumInfo.value.toggleSelect(widget.medium);
+            YellowImagePicker.currentAlbumInfo.value.toggleSelect(this.medium);
           },
           child: Container(
             width: 85,
@@ -53,19 +27,16 @@ class _SelectButtonState extends State<SelectButton> {
               child: Container(
                 width: 30,
                 height: 30,
-                child: this.widget.medium.order > 0
-                    ? Center(child: Text(widget.medium.order.toString()))
+                child: this.medium.order > 0
+                    ? Center(child: Text(medium.order.toString()))
                     : null,
                 decoration: BoxDecoration(
-                    color: this.widget.medium.isSelected
+                    color: this.medium.isSelected
                         ? Colors.yellow
-                        : Colors.transparent,
+                        : Colors.grey.withOpacity(0.3),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     border: Border.all(
-                        color: this.isDark
-                            ? Colors.white.withOpacity(0.5)
-                            : Colors.black.withOpacity(0.5),
-                        width: 3)),
+                        color: Colors.white.withOpacity(0.2), width: 3)),
               ),
             ),
           ),
