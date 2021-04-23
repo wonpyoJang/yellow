@@ -62,7 +62,6 @@ class _ImagePanelState extends State<ImagePanel> {
   }
 
   Widget buildImage(BuildContext context, int index) {
-
     pg.ThumbnailProvider thumbnailProvider = _media[index].getThumbnail();
 
     return Stack(
@@ -86,7 +85,7 @@ class _ImagePanelState extends State<ImagePanel> {
                   fit: BoxFit.cover,
                   image: thumbnailProvider),
             )),
-            SelectButton(key: UniqueKey(), medium: _media[index]),
+        SelectButton(key: UniqueKey(), medium: _media[index]),
       ],
     );
   }

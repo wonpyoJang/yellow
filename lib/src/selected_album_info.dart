@@ -108,5 +108,4 @@ class CurrentAlbumInfo {
     _media = newMedia;
     _selectedMedia.clear();
   }
-
 }

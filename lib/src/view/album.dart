@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
@@ -10,6 +11,7 @@ import '../../yellow.dart';
 import '../models/album.dart';
 import '../models/medium.dart';
 import '../selected_album_info.dart';
+import 'camera.dart';
 
 class AlbumView extends StatefulWidget {
   @override
@@ -323,7 +325,15 @@ class _AlbumViewState extends State<AlbumView>
 
   Widget buildCameraButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        cameras = await availableCameras();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CameraExampleHome()),
+        );
+      },
       child: Container(
         child: Icon(Icons.camera_enhance),
         decoration: BoxDecoration(

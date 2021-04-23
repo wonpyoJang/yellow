@@ -47,11 +47,12 @@ class Medium {
     Completer<ImageInfo> completer = Completer();
     var img = pg.ThumbnailProvider(
         height: 10000, width: 10000, mediumId: id, highQuality: true);
-    img.resolve(ImageConfiguration()).addListener(ImageStreamListener((ImageInfo info,bool _){
+    img
+        .resolve(ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     }));
     ImageInfo imageInfo = await completer.future;
     return imageInfo.image;
   }
-
 }
