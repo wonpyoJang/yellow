@@ -160,7 +160,7 @@ class _AlbumViewState extends State<AlbumView>
                 axisAlignment: 1.0,
                 sizeFactor: animation,
                 child: Container(
-                    color: Colors.blue,
+                    color: Colors.grey,
                     child: ListView.builder(
                       itemCount: _albums.length,
                       itemBuilder: (context, index) {
