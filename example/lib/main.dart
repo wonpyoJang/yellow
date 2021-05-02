@@ -69,9 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
             MaterialButton(
                 onPressed: () async {
                   if (await _promptPermissionSetting()) {
-                    imageFiles = await YellowImagePicker.pickImages(context,
+                    var result = await YellowImagePicker.pickImages(context,
                         title: "yellow picker");
-                    setState(() {});
+
+                    if(result.isNotEmpty) {
+                      imageFiles = result;
+                      setState(() {});
+                    }
                   }
                 },
                 color: Colors.grey[200],
