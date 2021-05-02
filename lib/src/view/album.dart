@@ -148,7 +148,7 @@ class _AlbumViewState extends State<AlbumView>
                                   return buildCameraButton();
                                 } else {
                                   return buildImageItem(
-                                      context, data, index - 1);
+                                      context, data, index - 1, _scrollController);
                                 }
                               },
                             ),
@@ -218,7 +218,7 @@ class _AlbumViewState extends State<AlbumView>
   }
 
   Widget buildImageItem(
-      BuildContext context, CurrentAlbumInfo data, int index) {
+      BuildContext context, CurrentAlbumInfo data, int index, ScrollController _scrollController) {
     GlobalKey gridItemKey = new GlobalKey();
 
     return Stack(
@@ -235,7 +235,7 @@ class _AlbumViewState extends State<AlbumView>
             await HapticFeedback.heavyImpact();
 
             double tapPositionX = details.globalPosition.dx;
-            double tapPositionY = details.globalPosition.dy;
+            double tapPositionY = details.globalPosition.dy + _scrollController.offset;
 
             // -1 is for considering camera item
             int selectedItemIndex =
@@ -252,7 +252,7 @@ class _AlbumViewState extends State<AlbumView>
           },
           onLongPressMoveUpdate: (details) {
             double tapPositionX = details.globalPosition.dx;
-            double tapPositionY = details.globalPosition.dy;
+            double tapPositionY = details.globalPosition.dy + _scrollController.offset;
 
             // -1 is for considering camera item
             int selectedItemIndex =
