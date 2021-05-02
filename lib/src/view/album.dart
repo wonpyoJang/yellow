@@ -236,8 +236,10 @@ class _AlbumViewState extends State<AlbumView>
 
             double tapPositionX = details.globalPosition.dx;
             double tapPositionY = details.globalPosition.dy;
+
+            // -1 is for considering camera item
             int selectedItemIndex =
-                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX) - 1;
             multiSelectStartIndex = selectedItemIndex;
             if (YellowImagePicker.currentAlbumInfo.value
                     .media[selectedItemIndex].isSelected ==
@@ -251,8 +253,10 @@ class _AlbumViewState extends State<AlbumView>
           onLongPressMoveUpdate: (details) {
             double tapPositionX = details.globalPosition.dx;
             double tapPositionY = details.globalPosition.dy;
+
+            // -1 is for considering camera item
             int selectedItemIndex =
-                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX);
+                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX) -1;
             multiSelectCurrentIndex = selectedItemIndex;
 
             for (int i = multiSelectStartIndex; i <= selectedItemIndex; ++i) {
