@@ -38,8 +38,19 @@ class _ViewerPageState extends State<ViewerPage> {
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(Icons.arrow_back_ios),
           ),
-          title: Text(
-              "${currentPage + 1}/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  "${currentPage + 1}/${YellowImagePicker.currentAlbumInfo.value.media.length}"),
+              GestureDetector(
+                  onTap: () {
+                    YellowImagePicker.isConfirmed = true;
+                    YellowImagePicker.exitYellowPicker(context);
+                  },
+                  child: Text("send"))
+            ],
+          ),
         ),
         body: ValueListenableBuilder<CurrentAlbumInfo>(
             valueListenable: YellowImagePicker.currentAlbumInfo,
