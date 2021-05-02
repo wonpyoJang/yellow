@@ -1,4 +1,4 @@
-import 'package:camera/camera.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
@@ -326,9 +326,6 @@ class _AlbumViewState extends State<AlbumView>
   Widget buildCameraButton() {
     return GestureDetector(
       onTap: () async {
-        WidgetsFlutterBinding.ensureInitialized();
-        cameras = await availableCameras();
-
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => CameraExampleHome()),
