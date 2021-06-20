@@ -14,8 +14,6 @@ import 'package:yellow/src/widget/camera/camera_preview.dart';
 import 'package:yellow/src/widget/camera/preview_card.dart';
 import 'package:yellow/src/widget/camera/top_bar.dart';
 
-
-
 class CameraExampleHome extends StatefulWidget {
   // just for E2E test. if true we create our images names from datetime.
   // Else it's just a name to assert image exists
@@ -27,7 +25,8 @@ class CameraExampleHome extends StatefulWidget {
   _CameraExampleHomeState createState() => _CameraExampleHomeState();
 }
 
-class _CameraExampleHomeState extends State<CameraExampleHome> with TickerProviderStateMixin {
+class _CameraExampleHomeState extends State<CameraExampleHome>
+    with TickerProviderStateMixin {
   String _lastPhotoPath, _lastVideoPath;
   bool _focus = false, _fullscreen = true, _isRecordingVideo = false;
 
@@ -38,7 +37,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with TickerProvid
   ValueNotifier<CaptureModes> _captureMode = ValueNotifier(CaptureModes.PHOTO);
   ValueNotifier<bool> _enableAudio = ValueNotifier(true);
   ValueNotifier<CameraOrientations> _orientation =
-  ValueNotifier(CameraOrientations.PORTRAIT_UP);
+      ValueNotifier(CameraOrientations.PORTRAIT_UP);
 
   /// use this to call a take picture
   PictureController _pictureController = new PictureController();
@@ -99,10 +98,10 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with TickerProvid
           _buildInterface(),
           (!_isRecordingVideo)
               ? PreviewCardWidget(
-            lastPhotoPath: _lastPhotoPath,
-            orientation: _orientation,
-            previewAnimation: _previewAnimation,
-          )
+                  lastPhotoPath: _lastPhotoPath,
+                  orientation: _orientation,
+                  previewAnimation: _previewAnimation,
+                )
               : Container(),
         ],
       ),
@@ -194,7 +193,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with TickerProvid
   _takePhoto() async {
     final Directory extDir = await getTemporaryDirectory();
     final testDir =
-    await Directory('${extDir.path}/test').create(recursive: true);
+        await Directory('${extDir.path}/test').create(recursive: true);
     final String filePath = widget.randomPhotoName
         ? '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg'
         : '${testDir.path}/photo_test.jpg';
@@ -245,7 +244,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with TickerProvid
     } else {
       final Directory extDir = await getTemporaryDirectory();
       final testDir =
-      await Directory('${extDir.path}/test').create(recursive: true);
+          await Directory('${extDir.path}/test').create(recursive: true);
       final String filePath = widget.randomPhotoName
           ? '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.mp4'
           : '${testDir.path}/video_test.mp4';

@@ -39,20 +39,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Future<bool> _promptPermissionSetting() async {
       if (Platform.isIOS) {
-        if (await Permission.storage
-            .request()
-            .isGranted &&
-            await Permission.photos
-                .request()
-                .isGranted) {
+        if (await Permission.storage.request().isGranted &&
+            await Permission.photos.request().isGranted) {
           return true;
         }
       }
 
       if (Platform.isAndroid) {
-        if(await Permission.storage
-            .request()
-            .isGranted) {
+        if (await Permission.storage.request().isGranted) {
           return true;
         }
       }

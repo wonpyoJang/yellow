@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_gallery/photo_gallery.dart' as pg;
@@ -147,8 +146,8 @@ class _AlbumViewState extends State<AlbumView>
                                 if (index == 0) {
                                   return buildCameraButton();
                                 } else {
-                                  return buildImageItem(
-                                      context, data, index - 1, _scrollController);
+                                  return buildImageItem(context, data,
+                                      index - 1, _scrollController);
                                 }
                               },
                             ),
@@ -217,8 +216,8 @@ class _AlbumViewState extends State<AlbumView>
     );
   }
 
-  Widget buildImageItem(
-      BuildContext context, CurrentAlbumInfo data, int index, ScrollController _scrollController) {
+  Widget buildImageItem(BuildContext context, CurrentAlbumInfo data, int index,
+      ScrollController _scrollController) {
     GlobalKey gridItemKey = new GlobalKey();
 
     return Stack(
@@ -235,7 +234,8 @@ class _AlbumViewState extends State<AlbumView>
             await HapticFeedback.heavyImpact();
 
             double tapPositionX = details.globalPosition.dx;
-            double tapPositionY = details.globalPosition.dy + _scrollController.offset;
+            double tapPositionY =
+                details.globalPosition.dy + _scrollController.offset;
 
             // -1 is for considering camera item
             int selectedItemIndex =
@@ -252,11 +252,12 @@ class _AlbumViewState extends State<AlbumView>
           },
           onLongPressMoveUpdate: (details) {
             double tapPositionX = details.globalPosition.dx;
-            double tapPositionY = details.globalPosition.dy + _scrollController.offset;
+            double tapPositionY =
+                details.globalPosition.dy + _scrollController.offset;
 
             // -1 is for considering camera item
             int selectedItemIndex =
-                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX) -1;
+                getSelectedIndex(gridItemKey, tapPositionY, tapPositionX) - 1;
             multiSelectCurrentIndex = selectedItemIndex;
 
             for (int i = multiSelectStartIndex; i <= selectedItemIndex; ++i) {
