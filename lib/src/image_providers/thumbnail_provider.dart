@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'dart:async';
@@ -47,7 +49,7 @@ class ThumbnailProvider extends ImageProvider<ThumbnailProvider> {
     );
     if (bytes.length == 0) return null;
 
-    return await decode(bytes);
+    return await decode(Uint8List.fromList(bytes));
   }
 
   @override

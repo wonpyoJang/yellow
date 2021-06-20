@@ -290,7 +290,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         content: Text(
             'It seems you doesn\'t authorized some permissions. Please check on your settings and try again.'),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () => Navigator.of(context).pop(),
           ),

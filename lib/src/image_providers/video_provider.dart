@@ -43,7 +43,7 @@ class _VideoProviderState extends State<VideoProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller == null || !_controller.value.initialized
+    return _controller == null || !_controller.value.isInitialized
         ? Container()
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class _VideoProviderState extends State<VideoProvider> {
                 aspectRatio: _controller.value.aspectRatio,
                 child: VideoPlayer(_controller),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   setState(() {
                     _controller.value.isPlaying

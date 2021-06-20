@@ -11,12 +11,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  photo_gallery: ^0.4.0
-  video_player:
-  transparent_image:
-  palette_generator:
-  camerawesome:
-  path_provider:
+  photo_gallery: ^1.0.1
+  video_player: ^2.1.6
+  transparent_image: ^2.0.0
+  palette_generator: ^0.3.0
+  camerawesome: ^0.3.0+1
+  path_provider: ^2.0.2
+  image:
 
 dev_dependencies:
   flutter_test:
