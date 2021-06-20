@@ -38,11 +38,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _promptPermissionSetting() async {
-      if (Platform.isIOS &&
-              await Permission.storage.request().isGranted &&
-              await Permission.photos.request().isGranted ||
-          Platform.isAndroid && await Permission.storage.request().isGranted) {
-        return true;
+      if (Platform.isIOS) {
+        if (await Permission.storage
+            .request()
+            .isGranted &&
+            await Permission.photos
+                .request()
+                .isGranted) {
+          return true;
+        }
+      }
+
+      if (Platform.isAndroid) {
+        if(await Permission.storage
+            .request()
+            .isGranted) {
+          return true;
+        }
       }
       return false;
     }
@@ -72,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     var result = await YellowImagePicker.pickImages(context,
                         title: "yellow picker");
 
-                    if(result.isNotEmpty) {
+                    if (result.isNotEmpty) {
                       imageFiles = result;
                       setState(() {});
                     }
